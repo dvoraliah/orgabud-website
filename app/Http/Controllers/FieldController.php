@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Field;
+use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 
 class FieldController extends Controller
@@ -14,7 +15,7 @@ class FieldController extends Controller
      */
     public function index()
     {
-        //
+        return response()->json(Field::all());
     }
 
     /**
@@ -25,7 +26,20 @@ class FieldController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'name' => 'required',
+            'field_category_id' => 'required',
+            'is_private' => 'boolean'
+        ]);
+
+        $request['slug'] = Str::slug($request->name);
+
+        Field::create($request->all());
+
+        return response([
+            'message' => "Création du champs {$request->name} réussie.",
+            'donnees' => Field::query()->orderBy('id', 'desc')->first(),
+        ]);
     }
 
     /**
@@ -36,7 +50,8 @@ class FieldController extends Controller
      */
     public function show(Field $field)
     {
-        //
+        return response()->json(Field::find($field->id));
+
     }
 
     /**
@@ -48,7 +63,18 @@ class FieldController extends Controller
      */
     public function update(Request $request, Field $field)
     {
-        //
+        $field = Field::findOrFail($field->id);
+        if ($request->name) {
+            $request['slug'] = Str::slug($request->name);
+        }
+
+
+        $field->update($request->all());
+
+        return response([
+            'message' => "Mise à jour du champs $field->name réussie.",
+            'donnees' => $field,
+        ]);
     }
 
     /**
@@ -59,6 +85,11 @@ class FieldController extends Controller
      */
     public function destroy(Field $field)
     {
-        //
+        Field::findOrFail($field->id)->delete();
+
+        return response([
+            'message' => "Suppression du champs $field->id réussie.",
+            'donnees' => $field,
+        ]);
     }
 }
