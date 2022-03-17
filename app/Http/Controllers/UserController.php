@@ -25,18 +25,7 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-        $request->validate([
-            'name' => 'required',
-            'email' => 'required|unique:users',
-            'password' => 'required|confirmed',
-            'status' => 'integer'
-        ]);
-        User::create($request->all());
-
-        return response([
-            'message' => "Création de l'utilisateur réussie.",
-            'donnees' => User::query()->orderBy('id', 'desc')->first(),
-        ]);
+        //
     }
 
     /**
@@ -83,4 +72,6 @@ class UserController extends Controller
             'donnees' => $user,
         ]);
     }
+
+    
 }

@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AuthController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\YearController;
@@ -20,6 +21,17 @@ use App\Http\Controllers\UserController;
 | is assigned the "api" middleware group. Enjoy building your API!
 |
 */
+
+/* Route d'authentification */
+// Route::post()
+Route::controller(AuthController::class)->group(function(){
+    Route::Post('register', 'register')->name('auth.register');
+    Route::Post('login', 'login')->name('auth.login');
+    Route::group(['middleware' => ['auth:sanctum']], function () {
+        Route::post('logout', 'logout')->name('auth.logout');
+    });
+});
+
 /* Route pour les modifications des valeurs de la table budgets = les montants associés au champs par utilisateur*/
 Route::controller(BudgetController::class)->group(function(){
     Route::Post('budgets', 'store')->name('budgets.store');
@@ -66,18 +78,18 @@ Route::controller(FieldController::class)->group(function () {
     Route::delete('fields/{field}', 'destroy')->name('fields.destroy');
 });
 
-/* Route pour les modifications des valeurs de la table status : les status qui détermine les permissions des utilisateurs */
+// /* Route pour les modifications des valeurs de la table status : les status qui détermine les permissions des utilisateurs */
 Route::controller(StatusController::class)->group(function () {
-    Route::Post('status', 'store')->name('status.store');
+//     Route::Post('status', 'store')->name('status.store');
     Route::get('status', 'index')->name('status.index');
-    Route::get('status/{status}', 'show')->name('status.show');
-    Route::put('status/{status}', 'update')->name('status.update');
-    Route::delete('status/{status}', 'destroy')->name('status.destroy');
+//     Route::get('status/{status}', 'show')->name('status.show');
+//     Route::put('status/{status}', 'update')->name('status.update');
+//     Route::delete('status/{status}', 'destroy')->name('status.destroy');
 });
 
 /* Route pour les modifications des valeurs de la table users : les utilisateurs */
 Route::controller(UserController::class)->group(function () {
-    Route::Post('users', 'store')->name('users.store');
+    
     Route::get('users', 'index')->name('users.index');
     Route::get('users/{user}', 'show')->name('users.show');
     Route::put('users/{user}', 'update')->name('users.update');
@@ -87,6 +99,13 @@ Route::controller(UserController::class)->group(function () {
 // Route::resource('BudgetController', BudgetController::class);
 // Route::resource('YearController', YearController::class);
 
-// Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-//     return $request->user();
-// });
+Route::group(['middleware' => ['auth:sanctum']], function () {
+    /* Route pour les modifications des valeurs de la table status : les status qui détermine les permissions des utilisateurs */
+    Route::controller(StatusController::class)->group(function () {
+        Route::Post('status', 'store')->name('status.store');
+        // Route::get('status', 'index')->name('status.index');
+        Route::get('status/{status}', 'show')->name('status.show');
+        Route::put('status/{status}', 'update')->name('status.update');
+        Route::delete('status/{status}', 'destroy')->name('status.destroy');
+    });
+});
