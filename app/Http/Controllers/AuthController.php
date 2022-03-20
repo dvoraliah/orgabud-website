@@ -34,7 +34,7 @@ class AuthController extends Controller
     {
 
         $request->validate([
-            'email' => 'required|unique:users',
+            'email' => 'required',
             'password' => 'required'
         ]);
 
@@ -52,8 +52,6 @@ class AuthController extends Controller
         }
 
         $token = $user->createToken('myapptoken')->plainTextToken;
-
-        return ['message' => 'pouet'];
 
         return response([
             'user' => $user,

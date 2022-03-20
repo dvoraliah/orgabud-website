@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Status;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class StatusController extends Controller
 {
@@ -14,7 +15,7 @@ class StatusController extends Controller
      */
     public function index()
     {
-        return response()->json(Status::all());
+        return response()->json(Auth::user()->status()->get());
     }
 
     /**
@@ -45,7 +46,19 @@ class StatusController extends Controller
      */
     public function show(Status $status)
     {
+        // return $status;
+        // return Auth::user()->status->name;
+        if(Auth::user()->status->name == 'Admin')
+        {
         return response()->json(Status::find($status->id));
+        }
+        else if(Auth::user()->status->name == 'Regular'){
+            if($status->name != 'Admin' ){
+                return response()->json(Status::find($status->id));
+            }
+            else return ['message' => 'Droit insuffisant pour afficher ce statut'];
+        }
+        else $this->index();  
     }
 
     /**
@@ -57,13 +70,16 @@ class StatusController extends Controller
      */
     public function update(Request $request, Status $status)
     {
-        $status = Status::findOrFail($status->id);
-        $status->update($request->all());
-
-        return response([
-            'message' => "Mise à jour du statut réussie.",
-            'donnees' => $status,
-        ]);
+        if (Auth::user()->status->name == 'Admin')
+        {
+            $status = Status::findOrFail($status->id);
+            $status->update($request->all());        
+            return response([
+                'message' => "Mise à jour du statut réussie.",
+                'donnees' => $status,
+            ]);
+        }
+        else return ['message' => 'Droits insuffisants'];
     }
 
     /**
@@ -74,11 +90,13 @@ class StatusController extends Controller
      */
     public function destroy(Status $status)
     {
-        Status::findOrFail($status->id)->delete();
+        if (Auth::user()->status->name == 'Admin') {
+            Status::findOrFail($status->id)->delete();
 
-        return response([
-            'message' => "Suppression du statut $status->id réussie.",
-            'donnees' => $status,
-        ]);
+            return response([
+                'message' => "Suppression du statut $status->id réussie.",
+                'donnees' => $status,
+            ]);
+        } else return ['message' => 'Droits insuffisants'];
     }
 }
