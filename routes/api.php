@@ -107,9 +107,7 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     });
     /* 
         Route::controller(AdminController::class)->group(function () {
-            Route::get('admin/budgets', 'index');
             Route::Post('admin/budgets', 'store'); 
-            Route::get('admin/budgets/{budget}', 'show');
             Route::put('admin/budgets/{budget}', 'update');
             Route::delete('admin/budgets/{budget}', 'destroy');
 
@@ -117,9 +115,7 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
             Route::put('admin/fields/{field}', 'update');
             Route::delete('admin/fields/{field}', 'destroy');
 
-            Route::get('admin/status', 'index');
             Route::Post('admin/status', 'store'); 
-            Route::get('admin/status/{status}', 'show');
             Route::put('admin/status/{status}', 'update');
             Route::delete('admin/status/{status}', 'destroy');
 
@@ -127,9 +123,7 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
             Route::put('admin/categories/{category}', 'update');
             Route::delete('admin/categories/{category}', 'destroy');
 
-            Route::get('admin/users', 'index');
             Route::Post('admin/users', 'store'); 
-            Route::get('admin/users/{user}', 'show');
             Route::put('admin/users/{user}', 'update');
             Route::delete('admin/users/{user}', 'destroy');
         }

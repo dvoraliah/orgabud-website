@@ -2,6 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
+use App\Models\Budget;
+use App\Models\Status;
 use Illuminate\Http\Request;
 
 class AdminController extends Controller
@@ -11,15 +14,24 @@ class AdminController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(string $page)
     {
-        if("lien admin/bugdgets"){
-            "j'affiche l'index des budgets";
-    
+        
+        if ($page == 'budgets') {
+            return response()->json(Budget::all());
+        }  
+        if ($page == 'status') {
+            return response()->json(Status::all());
         }
-        else if ("lien admin/status"){
-            "j'affiche le status";
+        if ($page == 'users') {
+            return response()->json(User::all());
+        }    
+        else {
+            return response([
+                'message' => "la page demandée n'est pas accessible"
+            ], 404);
         }
+        
     }
 
     /**
@@ -28,9 +40,14 @@ class AdminController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(String $page,Request $request)
     {
-        //
+        $availablePage = [
+            'budgets', 'fields', 'status', 'categories', 'user'
+        ];
+        if (in_array($page, $availablePage) ){
+            //TODO
+        }
     }
 
     /**
@@ -39,9 +56,21 @@ class AdminController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(String $page, $id)
     {
-        //
+        if ($page == 'budgets') {
+            return response()->json(Budget::find($id));
+        }
+        if ($page == 'status') {
+            return response()->json(Status::find($id));
+        }
+        if ($page == 'users') {
+            return response()->json(User::find($id));
+        } else {
+            return response([
+                'message' => "la page demandée n'est pas accessible"
+            ], 404);
+        }
     }
 
     /**
