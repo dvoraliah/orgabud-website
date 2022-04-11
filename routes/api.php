@@ -99,7 +99,13 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
 
     //Routes à faire pour les admins :
     Route::controller(AdminController::class)->group(function () {
-        Route::get('admin/{page}', 'index')->name('admin.index');
+        Route::get('admin/budgets', 'indexBudget')->name('admin.budget.index');
+        Route::get('admin/status', 'indexStatus')->name('admin.status.index');
+        Route::get('admin/users', 'indexUsers')->name('admin.users.index');
+        
+
+
+        // Route::get('admin/{page}', 'index')->name('admin.index');
         Route::Post('admin/{page}', 'store')->name('admin.store');
         Route::get('admin/{page}/{id}', 'show')->name('admin.show');
         Route::put('admin/{page}/{id}', 'update')->name('admin.update');
