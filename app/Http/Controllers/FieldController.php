@@ -24,6 +24,12 @@ class FieldController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
+
+    public function test(){
+        return response([
+            'message' => "affichage de la fonction test du fieldController depuis l'admin Controller"
+        ],201);
+    }
     public function store(Request $request)
     {
         $request->validate([

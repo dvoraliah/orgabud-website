@@ -3,36 +3,45 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
+use App\Models\Year;
 use App\Models\Budget;
 use App\Models\Status;
 use Illuminate\Http\Request;
+use App\Http\Controllers\BudgetController;
 
 class AdminController extends Controller
 {
     /**
-     * Display a listing of the resource.
+     * Affiche tous les budgets de tous les utilisateurs
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(string $page)
-    {
-        
-        if ($page == 'budgets') {
-            return response()->json(Budget::all());
-        }  
-        if ($page == 'status') {
-            return response()->json(Status::all());
-        }
-        if ($page == 'users') {
-            return response()->json(User::all());
-        }    
-        else {
-            return response([
-                'message' => "la page demandée n'est pas accessible"
-            ], 404);
-        }
-        
+    public function indexBudget(){
+        return response()->json(Budget::all());
     }
+
+    /**
+     * Affiche la liste de tous les status
+     *
+     * @return void
+     */
+    public function indexStatus()
+    {
+        return response()->json(Status::all());
+    }
+
+    /**
+     * Affiche La liste de tous les Utilisateurs
+     *
+     * @return void
+     */
+    public function indexUsers()
+    {
+        return response()->json(User::all());
+    }
+
+    
+    
 
     /**
      * Store a newly created resource in storage.
@@ -40,14 +49,13 @@ class AdminController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(String $page,Request $request)
+    public function storeFields(Request $request)
     {
-        $availablePage = [
-            'budgets', 'fields', 'status', 'categories', 'user'
-        ];
-        if (in_array($page, $availablePage) ){
-            //TODO
-        }
+        // $availablePage = [
+        //     'budgets', 'fields', 'status', 'categories', 'users'
+        // ];
+
+        return redirect('fields.test');
     }
 
     /**

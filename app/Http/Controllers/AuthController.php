@@ -23,6 +23,14 @@ class AuthController extends Controller
         $user = User::create($request->all());
 
         $token = $user->createToken('myapptoken')->plainTextToken;
+
+        if ($user->status_id == 3) {
+            $user->assignRole('Admin');
+        } else if ($user->status_id == 2) {
+            $user->assignRole('Premium');
+        } else {
+            $user->assignRole('Regular');
+        }
         return response([
             'message' => "Création de l'utilisateur réussie.",
             'donnees' => User::query()->orderBy('id', 'desc')->first(),
@@ -52,6 +60,8 @@ class AuthController extends Controller
         }
 
         $token = $user->createToken('myapptoken')->plainTextToken;
+        
+        
 
         return response([
             'user' => $user,

@@ -14,8 +14,13 @@ class StatusController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function index()
-    {
+    {   
+        if(Auth::user()->status->id == 3) 
+        {
+            return response()->json(Status::all());
+        }
         return response()->json(Auth::user()->status()->get());
+        
     }
 
     /**
@@ -46,19 +51,11 @@ class StatusController extends Controller
      */
     public function show(Status $status)
     {
-        // return $status;
-        // return Auth::user()->status->name;
         if(Auth::user()->status->name == 'Admin')
         {
         return response()->json(Status::find($status->id));
         }
-        else if(Auth::user()->status->name == 'Regular'){
-            if($status->name != 'Admin' ){
-                return response()->json(Status::find($status->id));
-            }
-            else return ['message' => 'Droit insuffisant pour afficher ce statut'];
-        }
-        else $this->index();  
+            else return ($this->index());
     }
 
     /**
