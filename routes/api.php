@@ -59,79 +59,38 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
 
     /* Route pour les modifications des valeurs de la table field_categories */
     Route::controller(FieldCategoryController::class)->group(function () {
-        Route::Post('categories', 'store')->name('categories.store');
+        Route::Post('categories', 'store')->name('categories.store')->middleware('role:Admin');
         Route::get('categories', 'index')->name('categories.index');
         Route::get('categories/{category}', 'show')->name('categories.show');
-        Route::put('categories/{category}', 'update')->name('categories.update');
-        Route::delete('categories/{category}', 'destroy')->name('categories.destroy');
+        Route::put('categories/{category}', 'update')->name('categories.update')->middleware('role:Admin');
+        Route::delete('categories/{category}', 'destroy')->name('categories.destroy')->middleware('role:Admin');
     });
 
     /* Route pour les modifications des valeurs de la table fields */
     Route::controller(FieldController::class)->group(function () {
-        Route::Post('fields', 'store')->name('fields.store');
+        Route::Post('fields', 'store')->name('fields.store')->middleware('role:Admin');
         Route::get('fields', 'index')->name('fields.index');
         Route::get('fields/{field}', 'show')->name('fields.show');
-        Route::put('fields/{field}', 'update')->name('fields.update');
-        Route::delete('fields/{field}', 'destroy')->name('fields.destroy');
+        Route::put('fields/{field}', 'update')->name('fields.update')->middleware('role:Admin');
+        Route::delete('fields/{field}', 'destroy')->name('fields.destroy')->middleware('role:Admin');
     });
 
     // /* Route pour les modifications des valeurs de la table status : les status qui détermine les permissions des utilisateurs */
     Route::controller(StatusController::class)->group(function () {
-        Route::get('status/{status}', 'show')->name('status.show');
-        Route::put('status/{status}', 'update')->name('status.update');
+        Route::get('status', 'index')->name('status.index');
+        Route::Post('status', 'store')->name('status.store')->middleware('role:Admin');
+        Route::get('status/{status}', 'show')->name('status.show')/* ->middleware('role:Admin') */;
+        Route::put('status/{status}', 'update')->name('status.update')->middleware('role:Admin');
+        Route::delete('status/{status}', 'destroy')->name('status.destroy')->middleware('role:Admin');
     });
 
     /* Route pour les modifications des valeurs de la table users : les utilisateurs */
-    Route::controller(UserController::class)->group(function () {    
+    Route::controller(UserController::class)->group(function () {
+        Route::get('users', 'index')->name('users.index')->middleware('role:Admin');   
         Route::get('users/{user}', 'show')->name('users.show');
         Route::put('users/{user}', 'update')->name('users.update');
         Route::delete('users/{user}', 'destroy')->name('users.destroy');
     });
 
-        /* Route pour les modifications des valeurs de la table status : les status qui détermine les permissions des utilisateurs */
-    Route::controller(StatusController::class)->group(function () {
-        Route::Post('status', 'store')->name('status.store');
-        Route::get('status', 'index')->name('status.index');
-        Route::get('status/{status}', 'show')->name('status.show');
-        Route::put('status/{status}', 'update')->name('status.update');
-        Route::delete('status/{status}', 'destroy')->name('status.destroy');
-    });
 
-    //Routes à faire pour les admins :
-    Route::controller(AdminController::class)->group(function () {
-        Route::get('admin/budgets', 'indexBudget')->name('admin.budget.index');
-        Route::get('admin/status', 'indexStatus')->name('admin.status.index');
-        Route::get('admin/users', 'indexUsers')->name('admin.users.index');
-        
-
-
-        // Route::get('admin/{page}', 'index')->name('admin.index');
-        Route::Post('admin/{page}', 'store')->name('admin.store');
-        Route::get('admin/{page}/{id}', 'show')->name('admin.show');
-        Route::put('admin/{page}/{id}', 'update')->name('admin.update');
-        Route::delete('admin/{page}/{id}', 'delete')->name('admin/destroy');
-    });
-    /* 
-        Route::controller(AdminController::class)->group(function () {
-            Route::Post('admin/budgets', 'store'); 
-            Route::put('admin/budgets/{budget}', 'update');
-            Route::delete('admin/budgets/{budget}', 'destroy');
-
-            Route::Post('admin/fields', 'store'); 
-            Route::put('admin/fields/{field}', 'update');
-            Route::delete('admin/fields/{field}', 'destroy');
-
-            Route::Post('admin/status', 'store'); 
-            Route::put('admin/status/{status}', 'update');
-            Route::delete('admin/status/{status}', 'destroy');
-
-            Route::post('admin/categories', 'store');
-            Route::put('admin/categories/{category}', 'update');
-            Route::delete('admin/categories/{category}', 'destroy');
-
-            Route::Post('admin/users', 'store'); 
-            Route::put('admin/users/{user}', 'update');
-            Route::delete('admin/users/{user}', 'destroy');
-        }
-     */
 });
