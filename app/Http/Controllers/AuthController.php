@@ -76,4 +76,17 @@ class AuthController extends Controller
             'message' => 'Deconnection réussie'
         ];
     }
+    public function isRegister(Request $request){
+        $request->validate([
+            'email' => 'required'
+        ]);
+        $findUser = User::where('email', $request['email'])->first();
+        if($findUser){
+            $codeReset = random_int(1, 9). random_int(1, 9). random_int(1, 9). random_int(1, 9);
+        }
+
+        return response([
+            'Resultat' => $findUser ? $codeReset : false,
+        ]);
+    }
 }

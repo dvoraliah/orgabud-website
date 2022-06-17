@@ -19,7 +19,7 @@ class Field extends Model
      *
      * @return void
      */
-    public function budget()
+    public function budgets()
     {
         return $this->belongsToMany(Budget::class);
     }
@@ -30,7 +30,7 @@ class Field extends Model
      *
      * @return void
      */
-    public function category()
+    public function field_category()
     {
         return $this->belongsTo(FieldCategory::class);
     }

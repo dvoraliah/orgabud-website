@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use App\Models\Budget;
+use App\Models\Field;
+use App\Models\FieldCategory;
 use Exception;
 use Illuminate\Http\Request;
 use function PHPSTORM_META\type;
@@ -115,5 +117,18 @@ class BudgetController extends Controller
                 'message' => "Suppression de la valeur Budget impossible, droits insuffisants"
             ], 401);
         }
+    }
+
+    public function filter($filter){
+        $category = FieldCategory::where('slug', $filter)->first();
+        $field = Field::where('field_category_id', $category->id)->get();
+        ///$budget = Auth::id;
+
+        $budget = User::with('budgets.field.field_category')->find(Auth::id());
+        // return view('welcome');
+        return response([
+            'budget'=>$budget,
+            'id' => Auth::id(),
+        ], 200);
     }
 }

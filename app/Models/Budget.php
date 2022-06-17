@@ -7,9 +7,10 @@ use App\Models\Year;
 use App\Models\Field;
 use App\Models\Month;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasOne;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Budget extends Model
 {
@@ -19,13 +20,13 @@ class Budget extends Model
 
     /**
      * field
-     * Un budget possède plusieurs fields
+     * Un budget a un seul field
      *
-     * @return HasMany
+     * @return HasOne
      */
-    public function field(): HasMany
+    public function field(): belongsTo
     {
-        return $this->hasMany(Field::class);
+        return $this->belongsTo(Field::class);
     }
 
     /**

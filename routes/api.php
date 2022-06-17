@@ -25,9 +25,11 @@ use App\Http\Controllers\FieldCategoryController;
 
 /* Route d'authentification */
 
+// Route::get('/test', [UserController::class, 'index'])->name('years.index');
 Route::controller(AuthController::class)->group(function(){
     Route::Post('register', 'register')->name('auth.register');
     Route::Post('login', 'login')->name('auth.login');
+    Route::Post('isRegister', 'isRegister')->name('auth.isRegister');
     Route::group(['middleware' => ['auth:sanctum']], function () {
         Route::post('logout', 'logout')->name('auth.logout');
     });
@@ -41,13 +43,14 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
         Route::Post('budgets', 'store')->name('budgets.store');
         Route::get('budgets', 'index')->name('budgets.index');
         Route::get('budgets/{budget}', 'show')->name('budgets.show');
+        Route::get('budgets/filter/{filter}', 'filter')->name('budgets.filter');
         Route::put('budgets/{budget}', 'update')->name('budgets.update');
         Route::delete('budgets/{budget}', 'destroy')->name('budgets.destroy');
     });
 
     /* Route pour les modifications des valeurs de la table years */
     Route::controller(YearController::class)->group(function () {
-        Route::get('years', 'index')->name('years.index');
+        // Route::get('years', 'index')->name('years.index');
         Route::get('years/{year}', 'show')->name('years.show');
     });
 
