@@ -43,12 +43,15 @@ class FieldCategoryController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\FieldCategory  $category
+     * @param string $category
      * @return \Illuminate\Http\Response
      */
-    public function show(FieldCategory $category)
+    public function show($category)
     {
-        return response()->json(FieldCategory::find($category->id));
+        $reponse = FieldCategory::where('slug', $category)->get();
+        return response()->json($reponse);
+        // return response()->json(FieldCategory::find($category->id));
+
     }
 
     /**

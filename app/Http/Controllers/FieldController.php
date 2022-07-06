@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Field;
+use App\Models\FieldCategory;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 
@@ -90,6 +91,20 @@ class FieldController extends Controller
         return response([
             'message' => "Suppression du champs $field->id réussie.",
             'donnees' => $field,
+        ]);
+    }
+    /**
+     * Retourne la liste des champs disponible dans une catégorie
+     *
+     * @param string $categorie
+     * @param string $field
+     * @return \Illuminate\Http\Response
+     */
+    public function fieldsByCategory($category){
+        $idCategory = FieldCategory::where('slug', $category)->first('id');
+        $champs = Field::where('field_category_id', $idCategory->id)->get();
+        return response([
+            'champs' => $champs
         ]);
     }
 }
