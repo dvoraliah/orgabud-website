@@ -41,6 +41,14 @@ class UserSeeder extends Seeder
                 'password' => bcrypt('anya'), // password
                 'status_id' => 1,
                 'remember_token' => Str::random(10)
+            ],
+            [
+                'name' => 'Dvoraliah',
+                'email' => 'dvoraliah@test.fr',
+                'email_verified_at' => now(),
+                'password' => bcrypt('anya'), // password
+                'status_id' => 1,
+                'remember_token' => Str::random(10)
             ]
         ];
 

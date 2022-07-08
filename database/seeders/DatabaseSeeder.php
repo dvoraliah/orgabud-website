@@ -27,8 +27,6 @@ class DatabaseSeeder extends Seeder
         $this->call(FieldCategorySeeder::class);
         $this->call(UserSeeder::class);
         \App\Models\User::factory(10)->create();
-        $this->call(MonthSeeder::class);
-        $this->call(YearSeeder::class);
         $this->call(FieldsSeeder::class);
         \App\Models\Budget::factory(50)->create();
         Role::create(['name' => 'Regular']);
