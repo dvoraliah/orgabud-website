@@ -25,6 +25,7 @@ class BudgetFactory extends Factory
             'value' => $this->faker->randomFloat(2, 0.01, 3000),
             'field_id' => Field::query()->inRandomOrder()->first()->id,
             'user_id' => User::query()->inRandomOrder()->first()->id,
+            'month_id' => $this->faker->random_int(20)
             'month_id' => Month::query()->inRandomOrder()->first()->id,
             'year_id' => Year::query()->inRandomOrder()->first()->id,
             'is_debited' => $this->faker->boolean(),

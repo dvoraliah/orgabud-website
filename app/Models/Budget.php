@@ -16,7 +16,7 @@ class Budget extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['value', 'field_id', 'user_id', 'month_id', 'year_id', 'is_debited'];
+    protected $fillable = ['value', 'field_id', 'user_id', 'month', 'year', 'is_debited'];
 
     /**
      * field
@@ -46,21 +46,21 @@ class Budget extends Model
      *
      * @return BelongsTo
      */
-    public function month(): BelongsTo
-    {
-        return $this->belongsTo(Month::class);
-    }
+    // public function month(): BelongsTo
+    // {
+    //     return $this->belongsTo(Month::class);
+    // }
 
 
-    /**
-     * Year
-     * Un budget appartient à une année
-     *
-     * @return BelongsTo
-     */
-    public function year(): BelongsTo
-    {
-        return $this->belongsTo(Year::class);
-    }
+    // /**
+    //  * Year
+    //  * Un budget appartient à une année
+    //  *
+    //  * @return BelongsTo
+    //  */
+    // public function year(): BelongsTo
+    // {
+    //     return $this->belongsTo(Year::class);
+    // }
 }
 

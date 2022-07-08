@@ -22,7 +22,7 @@ class BudgetController extends Controller
      */
     public function index()
     {
-        return response()->json(Auth::user()->budgets()->get());
+        return response()->json(Auth::user()->budgets()->with(['field', 'user'])->get());
     }
 
     /**
@@ -58,7 +58,7 @@ class BudgetController extends Controller
      */
     public function show(Budget $budget)
     {
-        $result = Budget::where([
+        $result = Budget::with(['field', 'user'])->where([
             ['id', '=', $budget->id],
             ['user_id', '=', Auth::id()]
         ])->get();

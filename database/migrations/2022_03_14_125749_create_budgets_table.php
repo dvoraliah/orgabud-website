@@ -22,8 +22,8 @@ return new class extends Migration
             $table->decimal('value');
             $table->foreignIdFor(Field::class)->constrained()->onDelete('cascade')->onUpdate('cascade');
             $table->foreignIdFor(User::class)->constrained()->onDelete('cascade')->onUpdate('cascade');
-            $table->foreignIdFor(Month::class)->constrained()->onDelete('cascade')->onUpdate('cascade');
-            $table->foreignIdFor(Year::class)->constrained()->onDelete('cascade')->onUpdate('cascade');
+            $table->integer('month');
+            $table->integer('year');            
             $table->boolean('is_debited')->default(0);
             $table->timestamps();
         });
