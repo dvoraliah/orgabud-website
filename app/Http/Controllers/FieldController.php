@@ -16,7 +16,7 @@ class FieldController extends Controller
      */
     public function index()
     {
-        return response()->json(Field::all());
+        return response()->json(Field::with(['field_category'])->get());
     }
 
     /**
@@ -51,7 +51,7 @@ class FieldController extends Controller
      */
     public function show(Field $field)
     {
-        return response()->json(Field::find($field->id));
+        return response()->json(Field::with(['field_category'])->find($field->id));
 
     }
 

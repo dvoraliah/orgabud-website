@@ -36,8 +36,8 @@ class BudgetController extends Controller
         $request->validate([
             'value' => 'required',
             'field_id' => 'required',
-            'month_id' => 'required',
-            'year_id' => 'required',
+            'month' => 'required',
+            'year' => 'required',
         ]);
 
         $request['user_id'] = Auth::id();
