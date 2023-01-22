@@ -4,10 +4,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\UserController;
-use App\Http\Controllers\YearController;
-use App\Http\Controllers\AdminController;
 use App\Http\Controllers\FieldController;
-use App\Http\Controllers\MonthController;
 use App\Http\Controllers\BudgetController;
 use App\Http\Controllers\StatusController;
 use App\Http\Controllers\FieldCategoryController;
@@ -77,17 +74,7 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
         Route::delete('budgets/{budget}', 'destroy')->name('budgets.destroy');
     });
 
-    /* Route pour les modifications des valeurs de la table years */
-    Route::controller(YearController::class)->group(function () {
-        // Route::get('years', 'index')->name('years.index');
-        Route::get('years/{year}', 'show')->name('years.show');
-    });
 
-    /* Route pour les modifications des valeurs de la table months */
-    Route::controller(MonthController::class)->group(function () {
-        Route::get('months', 'index')->name('months.index');
-        Route::get('months/{month}', 'show')->name('months.show');
-    });
 
     /* Route pour les modifications des valeurs de la table field_categories */
     Route::controller(FieldCategoryController::class)->group(function () {

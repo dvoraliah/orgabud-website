@@ -33,7 +33,7 @@ class AuthController extends Controller
             $user->assignRole('Regular');
         }
         
-        return response([
+        return response()->json([
             'message' => "Création de l'utilisateur réussie.",
             'donnees' => User::query()->orderBy('id', 'desc')->first(),
             'token' => $token
@@ -66,7 +66,7 @@ class AuthController extends Controller
         return response([
             'user' => $user,
             'token' => $token
-        ], 201);
+        ], 200);
     }
 
     public function logout(Request $request)
